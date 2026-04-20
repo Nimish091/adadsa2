@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Croatia EM Talent Mapping</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #FFFFFF;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .cover {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #F0EDE8 0%, #E8E4DC 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px 2rem;
+    margin: 0 -2rem;
+    width: calc(100% + 4rem);
+    margin-bottom: 2rem;
+  }
+
+  .page-icon {
+    font-size: 52px;
+    margin-bottom: 1rem;
+    display: block;
+    margin-top: 0;
+  }
+
+  .page-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .props-table {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2px 0;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+  }
+
+  .prop-key {
+    color: #9b9b9b;
+    padding: 5px 0;
+    font-size: 13px;
+  }
+
+  .prop-val {
+    color: #555;
+    padding: 5px 0;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .tag-blue   { background: #dbeafe; color: #1e40af; }
+  .tag-gray   { background: #f3f4f6; color: #374151; }
+  .tag-red    { background: #fee2e2; color: #991b1b; }
+  .tag-amber  { background: #fef3c7; color: #92400e; }
+  .tag-teal   { background: #d1fae5; color: #065f46; }
+  .tag-purple { background: #ede9fe; color: #4c1d95; }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 2rem 0;
+  }
+
+  .h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .body-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin: 1rem 0;
+  }
+
+  .stat-block {
+    background: #f7f7f5;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .stat-val {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-lbl {
+    font-size: 11.5px;
+    color: #888;
+    line-height: 1.4;
+  }
+
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .callout-text { font-size: 13.5px; color: #1a1a1a; line-height: 1.65; }
+  .callout-text strong { font-weight: 600; }
+
+  .callout-gray   { background: #f7f6f3; }
+  .callout-red    { background: #fff0f0; }
+  .callout-amber  { background: #fffbeb; }
+  .callout-teal   { background: #f0fdf8; }
+  .callout-blue   { background: #eff6ff; }
+
+  .table-wrap {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    background: #f7f6f3;
+    color: #888;
+    font-weight: 500;
+    padding: 8px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  td {
+    padding: 9px 14px;
+    color: #1a1a1a;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #fafaf9; }
+
+  .bar-wrap {
+    background: #efefef;
+    border-radius: 3px;
+    height: 12px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+  .bar { height: 100%; border-radius: 3px; }
+
+  .toggle {
+    margin: 4px 0;
+    border-radius: 6px;
+  }
+
+  .toggle-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 5px 4px;
+    border-radius: 6px;
+    user-select: none;
+  }
+
+  .toggle-head:hover { background: #f7f6f3; }
+
+  .toggle-arrow {
+    width: 18px;
+    height: 18px;
+    color: #aaa;
+    flex-shrink: 0;
+    transition: transform 0.18s ease;
+  }
+
+  .toggle-arrow.open { transform: rotate(90deg); }
+
+  .toggle-label { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+
+  .toggle-body {
+    padding: 6px 0 8px 28px;
+    display: none;
+  }
+  .toggle-body.open { display: block; }
+
+  .checklist { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+
+  .checklist-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.55;
+  }
+
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1.5px solid #ccc;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .check-box.done {
+    background: #059669;
+    border-color: #059669;
+  }
+
+  .check-box.done::after {
+    content: "";
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+
+  .done-text { text-decoration: line-through; color: #aaa; }
+
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+    font-size: 12px;
+    color: #bbb;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  @media (max-width: 520px) {
+    .page { padding: 0 1rem 3rem; }
+    .cover { margin: 0 -1rem; width: calc(100% + 2rem); height: 140px; }
+    .page-title { font-size: 26px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover"></div>
+
+<div class="page">
+
+  <span class="page-icon">🇭🇷</span>
+  <div class="page-title">Croatia EM talent mapping</div>
+
+  <div class="props-table">
+    <div class="prop-key">Period</div>
+    <div class="prop-val">Current snapshot · hires: last 24 months</div>
+    <div class="prop-key">Market</div>
+    <div class="prop-val">Croatia · Zagreb</div>
+    <div class="prop-key">Role scope</div>
+    <div class="prop-val"><span class="tag tag-blue">EM</span><span class="tag tag-blue">Sr. EM</span></div>
+    <div class="prop-key">Status</div>
+    <div class="prop-val"><span class="tag tag-amber">Active search</span></div>
+    <div class="prop-key">Owned by</div>
+    <div class="prop-val">Talent Acquisition</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">📊 At a glance</div>
+
+  <div class="stat-grid">
+    <div class="stat-block"><div class="stat-val">318</div><div class="stat-lbl">EMs mapped in Croatia</div></div>
+    <div class="stat-block"><div class="stat-val">157</div><div class="stat-lbl">Active / available (Zagreb)</div></div>
+    <div class="stat-block"><div class="stat-val">123</div><div class="stat-lbl">InMails sent (38%)</div></div>
+    <div class="stat-block"><div class="stat-val">67</div><div class="stat-lbl">Interviews completed</div></div>
+    <div class="stat-block"><div class="stat-val">21</div><div class="stat-lbl">Internal EMs at Super</div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">🧭 Market coverage</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Count</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Mapped EMs</td><td style="font-weight:600;">318</td><td style="color:#888;">EM or Sr. EM title · Croatia</td></tr>
+        <tr><td>Active / available</td><td style="font-weight:600;">157</td><td style="color:#888;">Zagreb reachable pool</td></tr>
+        <tr><td>InMails sent</td><td style="font-weight:600;">123</td><td style="color:#888;">38% of mapped EMs reached</td></tr>
+        <tr><td>Internal EMs (Super)</td><td style="font-weight:600;">21</td><td style="color:#888;">Croatia-based headcount</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">🎯 Interviews &amp; outcomes</div>
+
+  <div class="callout callout-gray">
+    <span class="callout-icon">🎙️</span>
+    <div class="callout-text"><strong>67 total interviews completed</strong> — top rejection driver is <span class="tag tag-red" style="font-size:11px;padding:1px 7px;">Skills gap</span> at 58% of candidates rejected.</div>
+  </div>
+
+  <div class="h2">Full loop summary</div>
+
+  <div class="callout callout-amber">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-text">Across the <strong>7-candidate full-loop slate</strong>, candidates are often strong technically and effective in team-lead execution, but consistently fall short of the E4 EM bar on full-scope people leadership — repeatable coaching and development, timely performance management, clear prioritisation and trade-offs, and influence across stakeholders beyond their immediate team.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">📥 Inbound application funnel</div>
+
+  <div class="callout callout-red">
+    <span class="callout-icon">🔴</span>
+    <div class="callout-text"><strong>89 applicants · 83 rejected (93%)</strong> — quality is the bottleneck, not top-of-funnel volume.</div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:1rem;">
+    <table>
+      <thead><tr><th>Stage</th><th>Rejections</th><th>Volume</th><th>% of total</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Application stage</td>
+          <td style="font-weight:600;color:#991b1b;">65</td>
+          <td><div class="bar-wrap"><div class="bar" style="width:78%;background:#E24B4A;"></div></div></td>
+          <td style="color:#888;">78%</td>
+        </tr>
+        <tr>
+          <td>Screening interview</td>
+          <td style="font-weight:600;color:#92400e;">11</td>
+          <td><div class="bar-wrap"><div class="bar" style="width:14%;background:#d97706;"></div></div></td>
+          <td style="color:#888;">14%</td>
+        </tr>
+        <tr>
+          <td>Introduction interview</td>
+          <td style="font-weight:600;color:#166534;">3</td>
+          <td><div class="bar-wrap"><div class="bar" style="width:4%;background:#16a34a;"></div></div></td>
+          <td style="color:#888;">4%</td>
+        </tr>
+        <tr>
+          <td>Technical assessment</td>
+          <td style="font-weight:600;color:#1e40af;">3</td>
+          <td><div class="bar-wrap"><div class="bar" style="width:4%;background:#3b82f6;"></div></div></td>
+          <td style="color:#888;">4%</td>
+        </tr>
+        <tr>
+          <td>Final stage</td>
+          <td style="font-weight:600;color:#065f46;">1</td>
+          <td><div class="bar-wrap"><div class="bar" style="width:1%;background:#059669;"></div></div></td>
+          <td style="color:#888;">1%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="h2">Key observations</div>
+
+  <div class="toggle" id="t1">
+    <div class="toggle-head" onclick="tog('t1')">
+      <svg class="toggle-arrow" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="toggle-label">Very high rejection rate</span>
+    </div>
+    <div class="toggle-body">
+      <p class="body-text">83 of 89 applicants rejected (~93%), indicating the limiting factor is quality and fit, not top-of-funnel volume. The job post has been continuously active.</p>
+    </div>
+  </div>
+
+  <div class="toggle" id="t2">
+    <div class="toggle-head" onclick="tog('t2')">
+      <svg class="toggle-arrow" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="toggle-label">Most rejections at earliest stage</span>
+    </div>
+    <div class="toggle-body">
+      <p class="body-text">65 (~78%) rejected at application stage — screening criteria are filtering heavily, or inbound is broadly misaligned with the actual role profile.</p>
+    </div>
+  </div>
+
+  <div class="toggle" id="t3">
+    <div class="toggle-head" onclick="tog('t3')">
+      <svg class="toggle-arrow" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="toggle-label">Rare conversion to late stages</span>
+    </div>
+    <div class="toggle-body">
+      <p class="body-text">Only 1 candidate reached a final-stage rejection. Rejections are spread across Screening (11), Intro (3), Technical Assessment (3), and Final (1) — confirming conversion is very low throughout the funnel.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">⚠️ Recruitment challenges</div>
+
+  <div class="callout callout-red">
+    <span class="callout-icon">🔴</span>
+    <div class="callout-text"><strong>Talent scarcity</strong> — limited pool of EMs in Croatia; a substantial share has already been engaged, narrowing the addressable market quickly.</div>
+  </div>
+
+  <div class="callout callout-amber">
+    <span class="callout-icon">🟡</span>
+    <div class="callout-text"><strong>Role requirement</strong> — need technically strong candidates who are early in their management careers. This narrows the already limited pool further.</div>
+  </div>
+
+  <div class="callout callout-blue">
+    <span class="callout-icon">🔵</span>
+    <div class="callout-text"><strong>Industry mismatch</strong> — remaining candidates often come from less-aligned industries, reducing pipeline quality at the top of funnel.</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">✅ Current status</div>
+
+  <p class="body-text">A job post has been <strong>always active</strong> for EMs in Croatia. Application breakdown as of now:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stage</th><th>Count</th></tr></thead>
+      <tbody>
+        <tr><td>Total applications</td><td style="font-weight:600;">89</td></tr>
+        <tr><td style="color:#991b1b;">Application stage reject</td><td style="font-weight:600;color:#991b1b;">65</td></tr>
+        <tr><td style="color:#888;">Screening interview reject</td><td style="color:#888;">11</td></tr>
+        <tr><td style="color:#888;">Introduction interview reject</td><td style="color:#888;">3</td></tr>
+        <tr><td style="color:#888;">Technical assessment reject</td><td style="color:#888;">3</td></tr>
+        <tr><td style="color:#888;">Final stage reject</td><td style="color:#888;">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <div class="h1">💡 Implications &amp; next steps</div>
+
+  <div class="callout callout-teal">
+    <span class="callout-icon">💡</span>
+    <div class="callout-text">Quality is the bottleneck, not volume. The team should consider either <strong>(a)</strong> tighter targeting and messaging to improve inbound quality, or <strong>(b)</strong> recalibration of requirements / assessment to improve pass-through while maintaining bar.</div>
+  </div>
+
+  <div class="h2">Suggested actions</div>
+
+  <div class="checklist">
+    <div class="checklist-item"><div class="check-box"></div><span>Audit application-stage screening criteria for alignment with actual E4 EM bar</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Refresh outbound InMail messaging to target candidates earlier in management track</span></div>
+    <div class="checklist-item"><div class="check-box"></div><span>Explore adjacent markets (Slovenia, Serbia) to supplement Croatia pipeline</span></div>
+    <div class="checklist-item"><div class="check-box done"></div><span class="done-text">Job post active and maintained</span></div>
+    <div class="checklist-item"><div class="check-box done"></div><span class="done-text">Initial market mapping complete (318 EMs identified)</span></div>
+  </div>
+
+  <div class="footer">
+    <span>Croatia EM Talent Mapping · Talent Acquisition</span>
+    <span>Confidential · Current snapshot</span>
+  </div>
+
+</div>
+
+<script>
+  function tog(id) {
+    const wrap = document.getElementById(id);
+    const arrow = wrap.querySelector('.toggle-arrow');
+    const body = wrap.querySelector('.toggle-body');
+    const open = body.classList.toggle('open');
+    arrow.classList.toggle('open', open);
+  }
+</script>
+
+</body>
+</html>
